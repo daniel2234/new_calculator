@@ -1,21 +1,87 @@
+# used the determine if the user inputs a valid number
+def invalid_number?(number)
+  number.to_i != 0
+end
 
-puts "Enter the first number"
-number1 = gets.chomp
+# format prompt for user
+def prompt(message)
+  puts "==> #{message}"
+end
 
-puts "Enter the second number"
-number2 = gets.chomp
+prompt("Welcome to Calculator! Please enter your name:")
+name = ''
 
-puts "What would you like to do? 1)add 2)subtract 3)multiply 4)divide"
-choice = gets.chomp
+loop do
+  name = gets.chomp
+  if name.empty?
+    prompt("Make sure it is a valid name")
+  else
+    break
+  end
+end
 
-answer = if choice == '1'
-           number1.to_i + number2.to_i
-         elsif choice == '2'
-           number1.to_i - number2.to_i
-         elsif choice == '3'
-           number1.to_i * number2.to_i
-         else
-           number1.to_i / number2.to_i
-         end
+loop do # main loop
+  prompt("Hello #{name}")
+  number1 = ''
+  loop do
+    prompt("Enter the first number:")
+    number1 = gets.chomp
 
-puts "The result is #{answer}"
+    if invalid_number?(number1)
+      break
+    else
+      prompt("Does not seem to be a number")
+    end
+  end
+
+  number2 = ''
+  loop do
+    prompt("Enter the second number:")
+    number2 = gets.chomp
+
+    if invalid_number?(number2)
+      break
+    else
+      prompt("Does not seem to be a number")
+    end
+  end
+
+  operator_prompt = <<-MSG
+    What operation would you like to perform?
+    1)add
+    2)subtract
+    3)multiply
+    4)divide
+  MSG
+
+  prompt(operator_prompt)
+
+  operator = ''
+  loop do
+    operator = gets.chomp
+
+    if %w(1 2 3 4).include?(operator)
+      break
+    else
+      prompt("Must choose 1,2,3 or 4")
+    end
+  end
+
+  result = case operator
+           when '1'
+             number1.to_i + number2.to_i
+           when '2'
+             number1.to_i - number2.to_i
+           when '3'
+             number1.to_i * number2.to_i
+           when '4'
+             number1.to_i / number2.to_i
+           end
+
+  puts "The result is #{result}"
+
+  puts "Would you like another calculation? (Y)"
+  answer = gets.chomp
+
+  break unless answer.downcase.start_with?('y')
+end
