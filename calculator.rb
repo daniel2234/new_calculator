@@ -1,11 +1,24 @@
-# used the determine if the user inputs a valid number
+# used the determine if the user inputs a valid number, with a 0
 def invalid_number?(number)
-  number.to_i != 0
+  number.to_i.to_s == number
 end
 
 # format prompt for user
 def prompt(message)
   puts "==> #{message}"
+end
+
+def operation_to_message(op)
+    case op
+    when '1'
+      'Adding'
+    when '2'
+      'Subtracting'
+    when '3'
+      'Multiplying'
+    when '4'
+      'Dividing'
+    end
 end
 
 prompt("Welcome to Calculator! Please enter your name:")
@@ -66,6 +79,8 @@ loop do # main loop
       prompt("Must choose 1,2,3 or 4")
     end
   end
+
+  prompt("#{operation_to_message(operator)} the two numbers...")
 
   result = case operator
            when '1'
