@@ -1,6 +1,17 @@
+require 'yaml'
+MESSAGES = YAML.load_file('calculator_messages.yml')
+
+def integer?(number)
+  number.to_i.to_s == number
+end
+
+def float?(number)
+  number.to_f.to_s == number
+end
+
 # used the determine if the user inputs a valid number, with a 0
 def invalid_number?(number)
-  number.to_i.to_s == number
+  integer?(number) || float?(number)
 end
 
 # format prompt for user
@@ -9,19 +20,20 @@ def prompt(message)
 end
 
 def operation_to_message(op)
-    case op
-    when '1'
-      'Adding'
-    when '2'
-      'Subtracting'
-    when '3'
-      'Multiplying'
-    when '4'
-      'Dividing'
-    end
+  word = case operation
+         when '1'
+           'Adding'
+         when '2'
+           'Subtracting'
+         when '3'
+           'Multiplying'
+         when '4'
+           'Dividing'
+  end
+  word
 end
 
-prompt("Welcome to Calculator! Please enter your name:")
+prompt(MESSAGES['en']['welcome'])
 name = ''
 
 loop do
